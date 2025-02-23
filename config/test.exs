@@ -1,7 +1,7 @@
 import Config
 
-config :edgedb,
+config :gel,
   rended_colored_errors: false,
-  file_module: Tests.Support.Mocks.FileMock,
-  path_module: Tests.Support.Mocks.PathMock,
-  system_module: Tests.Support.Mocks.SystemMock
+  __file_module__: Tests.Support.Mocks.FileMock,
+  __path_module__: Tests.Support.Mocks.PathMock,
+  __system_module__: Tests.Support.Mocks.SystemMock

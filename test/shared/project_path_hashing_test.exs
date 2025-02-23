@@ -4,7 +4,7 @@ if File.exists?(testcases_file) do
   defmodule Tests.Shared.ProjectPathHashingTest do
     use Tests.Support.SharedCase, async: false
 
-    alias EdgeDB.Connection.Config.Credentials
+    alias Gel.Connection.Config.Credentials
 
     @cases read_testcases(testcases_file)
     @moduletag :project_path_hashing
@@ -59,7 +59,7 @@ else
   require Logger
 
   Logger.warning(
-    "No EdgeDB shared testcases file for project path hashing was found, these tests will be skipped, " <>
+    "No Gel shared testcases file for project path hashing was found, these tests will be skipped, " <>
       "to run shared tests clone project with submodules: " <>
       ~s("git clone --recursive <repository>") <> " or initialize submodule manually"
   )

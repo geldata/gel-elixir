@@ -12,12 +12,11 @@ defmodule Tests.Support.SharedCase do
     quote do
       import Mox
 
-      import Tests.Support.EdgeDBCase
+      import Tests.Support.GelCase
 
       import unquote(__MODULE__)
 
-      @debug_shared System.get_env("EDGEDB_SHARED_TESTS_DEBUG", "") != "" ||
-                      System.get_env("GEL_SHARED_TESTS_DEBUG", "") != ""
+      @debug_shared System.get_env("GEL_SHARED_TESTS_DEBUG", "") != ""
 
       @moduletag :shared
       @moduletag capture_log: !@debug_shared

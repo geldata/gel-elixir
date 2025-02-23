@@ -1,16 +1,16 @@
-# reset edgedb_scram
+# reset gel_scram
 
-drop role edgedb_scram;
-
-configure INSTANCE
-reset Auth
-filter Auth.user = 'edgedb_scram';
-
-
-# reset edgedb_trust
-
-drop role edgedb_trust;
+drop role gel_scram;
 
 configure INSTANCE
 reset Auth
-filter Auth.user = 'edgedb_trust';
+filter Auth.user = 'gel_scram';
+
+
+# reset gel_trust
+
+drop role gel_trust;
+
+configure INSTANCE
+reset Auth
+filter Auth.user = 'gel_trust';

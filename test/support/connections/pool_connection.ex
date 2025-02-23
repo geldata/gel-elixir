@@ -1,8 +1,8 @@
 defmodule Tests.Support.Connections.PoolConnection do
   use DBConnection
 
-  alias EdgeDB.Connection.InternalRequest
-  alias EdgeDB.Protocol.CodecStorage
+  alias Gel.Connection.InternalRequest
+  alias Gel.Protocol.CodecStorage
 
   defmodule State do
     defstruct [
@@ -49,7 +49,7 @@ defmodule Tests.Support.Connections.PoolConnection do
   @impl DBConnection
   def handle_prepare(query, _opts, state) do
     {:ok,
-     %EdgeDB.Query{
+     %Gel.Query{
        query
        | input_codec: CodecStorage.null_codec_id(),
          output_codec: CodecStorage.null_codec_id(),
@@ -70,7 +70,7 @@ defmodule Tests.Support.Connections.PoolConnection do
 
   @impl DBConnection
   def handle_execute(query, _params, _opts, state) do
-    {:ok, query, %EdgeDB.Result{cardinality: :no_result, set: %EdgeDB.Set{}}, state}
+    {:ok, query, %Gel.Result{cardinality: :no_result, set: %Gel.Set{}}, state}
   end
 
   @impl DBConnection
@@ -80,19 +80,19 @@ defmodule Tests.Support.Connections.PoolConnection do
 
   @impl DBConnection
   def handle_declare(_query, _params, _opts, state) do
-    exc = EdgeDB.InterfaceError.new("handle_declare/4 callback hasn't been implemented")
+    exc = Gel.InterfaceError.new("handle_declare/4 callback hasn't been implemented")
     {:error, exc, state}
   end
 
   @impl DBConnection
   def handle_fetch(_query, _cursor, _opts, state) do
-    exc = EdgeDB.InterfaceError.new("handle_fetch/4 callback hasn't been implemented")
+    exc = Gel.InterfaceError.new("handle_fetch/4 callback hasn't been implemented")
     {:error, exc, state}
   end
 
   @impl DBConnection
   def handle_deallocate(_query, _cursor, _opts, state) do
-    exc = EdgeDB.InterfaceError.new("handle_deallocate/4 callback hasn't been implemented")
+    exc = Gel.InterfaceError.new("handle_deallocate/4 callback hasn't been implemented")
     {:error, exc, state}
   end
 
@@ -124,6 +124,6 @@ defmodule Tests.Support.Connections.PoolConnection do
   end
 
   defp result do
-    %EdgeDB.Result{cardinality: :no_result, set: %EdgeDB.Set{}}
+    %Gel.Result{cardinality: :no_result, set: %Gel.Set{}}
   end
 end

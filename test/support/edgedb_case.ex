@@ -1,4 +1,4 @@
-defmodule Tests.Support.EdgeDBCase do
+defmodule Tests.Support.GelCase do
   use ExUnit.CaseTemplate
 
   import Mox
@@ -22,8 +22,8 @@ defmodule Tests.Support.EdgeDBCase do
   end
 
   defmacro skip_before(opts \\ []) do
-    {edgedb_version, ""} =
-      "EDGEDB_VERSION"
+    {gel_version, ""} =
+      "GEL_VERSION"
       |> System.get_env("9999")
       |> Integer.parse()
 
@@ -41,18 +41,18 @@ defmodule Tests.Support.EdgeDBCase do
           :tag
       end
 
-    if edgedb_version < requested_version do
+    if gel_version < requested_version do
       {:@, [], [{tag_type, [], [:skip]}]}
     else
       {:__block__, [], []}
     end
   end
 
-  @spec edgedb_client(term()) :: map()
-  def edgedb_client(_context) do
+  @spec gel_client(term()) :: map()
+  def gel_client(_context) do
     {:ok, client} =
       start_supervised(
-        {EdgeDB,
+        {Gel,
          tls_security: :insecure,
          max_concurrency: 1,
          show_sensitive_data_on_connection_error: true}
@@ -61,41 +61,41 @@ defmodule Tests.Support.EdgeDBCase do
     %{client: client}
   end
 
-  @spec reconnectable_edgedb_client(term()) :: map()
-  def reconnectable_edgedb_client(_context) do
+  @spec reconnectable_gel_client(term()) :: map()
+  def reconnectable_gel_client(_context) do
     spec =
-      EdgeDB.child_spec(
+      Gel.child_spec(
         tls_security: :insecure,
         max_concurrency: 1,
         show_sensitive_data_on_connection_error: true,
         connection_listeners: [self()]
       )
 
-    spec = %{spec | id: "reconnectable_edgedb_client"}
+    spec = %{spec | id: "reconnectable_gel_client"}
 
     {:ok, client} = start_supervised(spec)
-    {:ok, _result} = EdgeDB.query(client, "select 1")
+    {:ok, _result} = Gel.query(client, "select 1")
 
     assert_receive {:connected, conn_pid}, 1000
 
     socket =
       case :sys.get_state(conn_pid) do
-        %{mod_state: %{state: %EdgeDB.Connection.State{socket: socket}}} ->
+        %{mod_state: %{state: %Gel.Connection.State{socket: socket}}} ->
           socket
 
-        {:no_state, %{state: %EdgeDB.Connection.State{socket: socket}}} ->
+        {:no_state, %{state: %Gel.Connection.State{socket: socket}}} ->
           socket
       end
 
     %{client: client, conn_pid: conn_pid, socket: socket}
   end
 
-  @spec rollback(EdgeDB.client(), (EdgeDB.client() -> any())) :: :ok
+  @spec rollback(Gel.client(), (Gel.client() -> any())) :: :ok
   def rollback(client, callback) do
     assert {:error, :expected} =
-             EdgeDB.transaction(client, fn client ->
+             Gel.transaction(client, fn client ->
                callback.(client)
-               EdgeDB.rollback(client, reason: :expected)
+               Gel.rollback(client, reason: :expected)
              end)
 
     :ok
