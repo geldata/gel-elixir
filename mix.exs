@@ -2,7 +2,7 @@ defmodule EdgeDB.MixProject do
   use Mix.Project
 
   @app :edgedb
-  @version "0.7.1"
+  @version "0.8.0"
   @source_url "https://github.com/edgedb/edgedb-elixir"
   @description "EdgeDB client for Elixir"
 
@@ -163,14 +163,14 @@ defmodule EdgeDB.MixProject do
   defp aliases do
     [
       "edgedb.roles.setup": [
-        "cmd priv/scripts/setup-roles.sh"
+        "cmd test/support/scripts/setup-roles.sh"
       ],
       "edgedb.roles.reset": [
-        "cmd priv/scripts/drop-roles.sh",
-        "cmd priv/scripts/setup-roles.sh"
+        "cmd test/support/scripts/drop-roles.sh",
+        "cmd test/support/scripts/setup-roles.sh"
       ],
       "edgedb.docs": [
-        "run priv/scripts/edgedb_docs.exs"
+        "run test/support/scripts/edgedb_docs.exs"
       ]
     ]
   end

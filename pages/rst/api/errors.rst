@@ -199,6 +199,15 @@ Create a new ``EdgeDB.Error`` with ``EdgeDB.ConfigurationError`` type.
 
 Create a new ``EdgeDB.Error`` with ``EdgeDB.ConstraintViolationError`` type.
 
+*function* ``EdgeDB.Error.deprecated_scoping_error(msg, opts \\ [])``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code:: elixir
+
+   @spec EdgeDB.Error.deprecated_scoping_error(String.t(), Keyword.t()) :: t()
+
+Create a new ``EdgeDB.Error`` with ``EdgeDB.DeprecatedScopingError`` type.
+
 *function* ``EdgeDB.Error.disabled_capability_error(msg, opts \\ [])``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -270,6 +279,15 @@ Create a new ``EdgeDB.Error`` with ``EdgeDB.DuplicateFunctionDefinitionError`` t
    @spec EdgeDB.Error.duplicate_link_definition_error(String.t(), Keyword.t()) :: t()
 
 Create a new ``EdgeDB.Error`` with ``EdgeDB.DuplicateLinkDefinitionError`` type.
+
+*function* ``EdgeDB.Error.duplicate_migration_error(msg, opts \\ [])``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code:: elixir
+
+   @spec EdgeDB.Error.duplicate_migration_error(String.t(), Keyword.t()) :: t()
+
+Create a new ``EdgeDB.Error`` with ``EdgeDB.DuplicateMigrationError`` type.
 
 *function* ``EdgeDB.Error.duplicate_module_definition_error(msg, opts \\ [])``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -658,6 +676,15 @@ Create a new ``EdgeDB.Error`` with ``EdgeDB.ProtocolError`` type.
 
 Create a new ``EdgeDB.Error`` with ``EdgeDB.QueryArgumentError`` type.
 
+*function* ``EdgeDB.Error.query_assertion_error(msg, opts \\ [])``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code:: elixir
+
+   @spec EdgeDB.Error.query_assertion_error(String.t(), Keyword.t()) :: t()
+
+Create a new ``EdgeDB.Error`` with ``EdgeDB.QueryAssertionError`` type.
+
 *function* ``EdgeDB.Error.query_error(msg, opts \\ [])``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -731,6 +758,24 @@ Create a new ``EdgeDB.Error`` with ``EdgeDB.SchemaError`` type.
    @spec EdgeDB.Error.schema_syntax_error(String.t(), Keyword.t()) :: t()
 
 Create a new ``EdgeDB.Error`` with ``EdgeDB.SchemaSyntaxError`` type.
+
+*function* ``EdgeDB.Error.server_blocked_error(msg, opts \\ [])``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code:: elixir
+
+   @spec EdgeDB.Error.server_blocked_error(String.t(), Keyword.t()) :: t()
+
+Create a new ``EdgeDB.Error`` with ``EdgeDB.ServerBlockedError`` type.
+
+*function* ``EdgeDB.Error.server_offline_error(msg, opts \\ [])``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code:: elixir
+
+   @spec EdgeDB.Error.server_offline_error(String.t(), Keyword.t()) :: t()
+
+Create a new ``EdgeDB.Error`` with ``EdgeDB.ServerOfflineError`` type.
 
 *function* ``EdgeDB.Error.session_timeout_error(msg, opts \\ [])``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -867,6 +912,15 @@ Create a new ``EdgeDB.Error`` with ``EdgeDB.UnknownParameterError`` type.
 
 Create a new ``EdgeDB.Error`` with ``EdgeDB.UnknownPropertyError`` type.
 
+*function* ``EdgeDB.Error.unknown_tenant_error(msg, opts \\ [])``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code:: elixir
+
+   @spec EdgeDB.Error.unknown_tenant_error(String.t(), Keyword.t()) :: t()
+
+Create a new ``EdgeDB.Error`` with ``EdgeDB.UnknownTenantError`` type.
+
 *function* ``EdgeDB.Error.unknown_user_error(msg, opts \\ [])``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -921,4 +975,13 @@ Create a new ``EdgeDB.Error`` with ``EdgeDB.UnsupportedProtocolVersionError`` ty
 
 Create a new ``EdgeDB.Error`` with ``EdgeDB.WarningMessage`` type.
 
-.. _errors.txt: https://github.com/edgedb/edgedb/blob/a529aae753319f26cce942ae4fc7512dd0c5a37b/edb/api/errors.txt
+*function* ``EdgeDB.Error.watch_error(msg, opts \\ [])``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code:: elixir
+
+   @spec EdgeDB.Error.watch_error(String.t(), Keyword.t()) :: t()
+
+Create a new ``EdgeDB.Error`` with ``EdgeDB.WatchError`` type.
+
+.. _errors.txt: https://github.com/edgedb/edgedb/blob/887c5f4e838c89eff0bbc7cf58c1b37e5334ba5f/edb/api/errors.txt
