@@ -11,7 +11,7 @@ on:
 
 jobs:
   tests:
-    name: Run tests (OS ${{ matrix.os-version }} / OTP ${{ matrix.otp-version }} / Elixir ${{ matrix.elixir-version }} / EdgeDB ${{ matrix.edgedb-version }})
+    name: Run tests (OS ${{ matrix.os-version }} / OTP ${{ matrix.otp-version }} / Elixir ${{ matrix.elixir-version }} / Gel ${{ matrix.gel-version }})
 
     strategy:
       matrix:
@@ -31,7 +31,7 @@ jobs:
           - "1.17"
           - "1.18"
 
-        edgedb-version:
+        gel-version:
           - "2.0"
           - "3.0"
           - "4.0"
@@ -67,19 +67,19 @@ jobs:
         with:
           submodules: true
 
-      - name: Remove non ${{ matrix.edgedb-version }} EdgeDB version modules and migrations
+      - name: Remove non ${{ matrix.gel-version }} Gel version modules and migrations
         env:
-          EDGEDB_VERSION: ${{ matrix.edgedb-version }}
+          GEL_VERSION: ${{ matrix.gel-version }}
         run: |
-          EDGEDB_VERSION=${EDGEDB_VERSION%%.*}
+          GEL_VERSION=${GEL_VERSION%%.*}
 
           rm -r "test/support/schema/migrations/"
 
           for module_file in `ls test/support/schema/`
           do
-              module_version=${module_file%.esdl}
+              module_version=${module_file%.gel}
               module_version=${module_version#v}
-              if test ${EDGEDB_VERSION} -lt ${module_version}
+              if test ${GEL_VERSION} -lt ${module_version}
               then
                   module_path="test/support/schema/${module_file}"
                   echo "removing ${module_path}"
@@ -87,17 +87,17 @@ jobs:
               fi
           done
 
-          echo "EDGEDB_VERSION=${EDGEDB_VERSION}" >> ${GITHUB_ENV}
+          echo "GEL_VERSION=${GEL_VERSION}" >> ${GITHUB_ENV}
 
-      - uses: edgedb/setup-edgedb@v1
+      - uses: geldata/setup-gel@v1
         with:
-          server-version: ${{ matrix.edgedb-version }}
-          instance-name: edgedb_elixir
+          server-version: ${{ matrix.gel-version }}
+          instance-name: gel_elixir
 
-      - name: Generate EdgeDB migrations
+      - name: Generate Gel migrations
         run: |
-          edgedb migration create --non-interactive
-          edgedb migrate
+          gel migration create --non-interactive
+          gel migrate
 
       - uses: erlef/setup-beam@v1
         with:
@@ -119,7 +119,7 @@ jobs:
         run: mix deps.get --only test
 
       - name: Create requried users
-        run: mix edgedb.roles.setup
+        run: mix gel.roles.setup
 
       - name: Run tests
         run: mix coveralls
