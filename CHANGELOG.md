@@ -5,9 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## [0.8.0] - 2025-02-26
 
-[Compare with 0.7.0](https://github.com/edgedb/edgedb-elixir/compare/v0.7.0...HEAD)
+[Compare with 0.7.0](https://github.com/edgedb/edgedb-elixir/compare/v0.7.0...v0.8.0)
+
+> #### NOTE {: .warning}
+>
+> This is the last release of this client under the name `edgedb`
+> as the product name changes to `gel`.
+> The next release of this client (`0.9.0`) will not add any new functionality,
+> but will rename all modules and references from `EdgeDB` to `Gel`.
 
 ### Added
 
