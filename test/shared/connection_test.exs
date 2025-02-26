@@ -7,7 +7,7 @@ if File.exists?(testcases_file) do
   defmodule Tests.Shared.ConnectionTest do
     use Tests.Support.SharedCase, async: false
 
-    alias EdgeDB.Connection.Config
+    alias Gel.Connection.Config
 
     require Logger
 
@@ -17,13 +17,13 @@ if File.exists?(testcases_file) do
     @case_to_client_errors %{
       "credentials_file_not_found" => {RuntimeError, message: ~r/could not read/},
       "project_not_initialised" =>
-        {EdgeDB.Error,
-         type: EdgeDB.ClientConnectionError,
+        {Gel.Error,
+         type: Gel.ClientConnectionError,
          name: "ClientConnectionError",
          message: ~r/found "(gel|edgedb).toml" but the project is not initialized/},
       "no_options_or_toml" =>
-        {EdgeDB.Error,
-         type: EdgeDB.ClientConnectionError,
+        {Gel.Error,
+         type: Gel.ClientConnectionError,
          name: "ClientConnectionError",
          message: ~r/no "gel.toml" or "edgedb.toml" found and no connection options specified/},
       "invalid_credentials_file" => {RuntimeError, message: ~r/invalid credentials/},
@@ -36,20 +36,20 @@ if File.exists?(testcases_file) do
       "invalid_user" => {RuntimeError, message: ~r/invalid user/},
       "invalid_database" => {RuntimeError, message: ~r/invalid database/},
       "multiple_compound_env" => {
-        EdgeDB.Error,
-        type: EdgeDB.ClientConnectionError,
+        Gel.Error,
+        type: Gel.ClientConnectionError,
         name: "ClientConnectionError",
         message: ~r/can not have more than one of the following connection environment variables/
       },
       "multiple_compound_opts" => {
-        EdgeDB.Error,
-        type: EdgeDB.ClientConnectionError,
+        Gel.Error,
+        type: Gel.ClientConnectionError,
         name: "ClientConnectionError",
         message: ~r/can not have more than one of the following connection options/
       },
       "exclusive_options" => {
-        EdgeDB.Error,
-        type: EdgeDB.ClientConnectionError,
+        Gel.Error,
+        type: Gel.ClientConnectionError,
         name: "ClientConnectionError",
         message: ~r/are mutually exclusive/
       },
@@ -61,13 +61,13 @@ if File.exists?(testcases_file) do
           ~r"(one of `insecure`, `no_host_verification`, `strict` or `default`)|(tls_security must be set to strict)"
       },
       "invalid_secret_key" =>
-        {EdgeDB.Error,
-         type: EdgeDB.ClientConnectionError,
+        {Gel.Error,
+         type: Gel.ClientConnectionError,
          name: "ClientConnectionError",
          message: ~r/invalid secret key/},
       "secret_key_not_found" =>
-        {EdgeDB.Error,
-         type: EdgeDB.ClientConnectionError,
+        {Gel.Error,
+         type: Gel.ClientConnectionError,
          name: "ClientConnectionError",
          message: ~r/can not determine secret key for cloud instance/}
     }
@@ -250,7 +250,7 @@ else
   require Logger
 
   Logger.warning(
-    "No EdgeDB shared testcases file for connection options was found, these tests will be skipped, " <>
+    "No Gel shared testcases file for connection options was found, these tests will be skipped, " <>
       "to run shared tests clone project with submodules: " <>
       ~s("git clone --recursive <repository>") <> " or initialize submodule manually"
   )

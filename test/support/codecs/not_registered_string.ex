@@ -1,21 +1,21 @@
 defmodule Tests.Support.Codecs.NotRegisteredString do
-  @behaviour EdgeDB.Protocol.CustomCodec
+  @behaviour Gel.Protocol.CustomCodec
 
   defstruct []
 
-  @impl EdgeDB.Protocol.CustomCodec
+  @impl Gel.Protocol.CustomCodec
   def new do
     %__MODULE__{}
   end
 
-  @impl EdgeDB.Protocol.CustomCodec
+  @impl Gel.Protocol.CustomCodec
   def name do
     "default::not_registered_string"
   end
 end
 
-defimpl EdgeDB.Protocol.Codec, for: EdgeDB.Protocol.Codecs.NotRegisteredString do
-  alias EdgeDB.Protocol.{Codec, Codecs}
+defimpl Gel.Protocol.Codec, for: Gel.Protocol.Codecs.NotRegisteredString do
+  alias Gel.Protocol.{Codec, Codecs}
 
   @str_codec Codecs.Str.new()
 
