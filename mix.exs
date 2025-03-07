@@ -1,10 +1,10 @@
-defmodule EdgeDB.MixProject do
+defmodule Gel.MixProject do
   use Mix.Project
 
-  @app :edgedb
-  @version "0.8.0"
-  @source_url "https://github.com/edgedb/edgedb-elixir"
-  @description "EdgeDB client for Elixir"
+  @app :gel
+  @version "0.9.0"
+  @source_url "https://github.com/geldata/gel-elixir"
+  @description "Gel client for Elixir"
 
   def project do
     [
@@ -19,7 +19,7 @@ defmodule EdgeDB.MixProject do
       test_coverage: test_coverage(),
       preferred_cli_env: preferred_cli_env(),
       dialyzer: dialyzer(),
-      name: "EdgeDB",
+      name: "Gel",
       description: @description,
       package: package(),
       docs: docs(),
@@ -29,7 +29,7 @@ defmodule EdgeDB.MixProject do
 
   def application do
     [
-      mod: {EdgeDB.Application, []},
+      mod: {Gel.Application, []},
       extra_applications: [
         :crypto,
         :logger,
@@ -57,8 +57,7 @@ defmodule EdgeDB.MixProject do
       {:dialyxir, "~> 1.0", only: [:dev, :ci], runtime: false},
       {:credo, "~> 1.2", only: [:dev, :ci], runtime: false},
       # docs
-      {:ex_doc, "~> 0.28", only: [:dev, :ci], runtime: false},
-      {:panpipe, "~> 0.2", [only: [:ci]]}
+      {:ex_doc, "~> 0.28", only: [:dev, :ci], runtime: false}
     ]
   end
 
@@ -95,7 +94,6 @@ defmodule EdgeDB.MixProject do
       dialyzer: :ci,
       credo: :ci,
       docs: :ci,
-      "edgedb.docs": :ci,
       coveralls: :test,
       "coveralls.detail": :test,
       "coveralls.html": :test
@@ -139,53 +137,50 @@ defmodule EdgeDB.MixProject do
       ],
       skip_undefined_reference_warnings_on: ["CHANGELOG.md"],
       groups_for_modules: [
-        "EdgeDB types": [
-          EdgeDB.Object,
-          EdgeDB.Set,
-          EdgeDB.NamedTuple,
-          EdgeDB.RelativeDuration,
-          EdgeDB.DateDuration,
-          EdgeDB.ConfigMemory,
-          EdgeDB.Range,
-          EdgeDB.MultiRange
+        "Gel types": [
+          Gel.Object,
+          Gel.Set,
+          Gel.NamedTuple,
+          Gel.RelativeDuration,
+          Gel.DateDuration,
+          Gel.ConfigMemory,
+          Gel.Range,
+          Gel.MultiRange
         ],
         Protocol: [
-          EdgeDB.Protocol.Codec,
-          EdgeDB.Protocol.CustomCodec,
-          EdgeDB.Protocol.CodecStorage,
-          EdgeDB.Protocol.Enums
+          Gel.Protocol.Codec,
+          Gel.Protocol.CustomCodec,
+          Gel.Protocol.CodecStorage,
+          Gel.Protocol.Enums
         ],
-        Errors: edgedb_errors(Mix.env())
+        Errors: gel_errors(Mix.env())
       ]
     ]
   end
 
   defp aliases do
     [
-      "edgedb.roles.setup": [
+      "gel.roles.setup": [
         "cmd test/support/scripts/setup-roles.sh"
       ],
-      "edgedb.roles.reset": [
+      "gel.roles.reset": [
         "cmd test/support/scripts/drop-roles.sh",
         "cmd test/support/scripts/setup-roles.sh"
-      ],
-      "edgedb.docs": [
-        "run test/support/scripts/edgedb_docs.exs"
       ]
     ]
   end
 
   # this may take some time, so make sure we only do it when necessary
-  defp edgedb_errors(:ci) do
+  defp gel_errors(:ci) do
     error_regex = ~r/^0x(_[0-9A-Fa-f]{2}){4}\s*(?<error_name>\w+)/
 
-    for line <- File.stream!("./priv/edgedb/api/errors.txt"), Regex.match?(error_regex, line) do
+    for line <- File.stream!("./priv/gel/api/errors.txt"), Regex.match?(error_regex, line) do
       %{"error_name" => error_name} = Regex.named_captures(error_regex, line)
-      Module.concat([EdgeDB, error_name])
+      Module.concat([Gel, error_name])
     end
   end
 
-  defp edgedb_errors(_env) do
+  defp gel_errors(_env) do
     []
   end
 end

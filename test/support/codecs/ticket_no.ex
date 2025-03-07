@@ -1,22 +1,22 @@
 defmodule Tests.Support.Codecs.TicketNo do
-  @behaviour EdgeDB.Protocol.CustomCodec
+  @behaviour Gel.Protocol.CustomCodec
 
   defstruct []
 
-  @impl EdgeDB.Protocol.CustomCodec
+  @impl Gel.Protocol.CustomCodec
   def new do
     %__MODULE__{}
   end
 
-  @impl EdgeDB.Protocol.CustomCodec
+  @impl Gel.Protocol.CustomCodec
   def name do
     "v1::TicketNo"
   end
 end
 
-defimpl EdgeDB.Protocol.Codec, for: Tests.Support.Codecs.TicketNo do
+defimpl Gel.Protocol.Codec, for: Tests.Support.Codecs.TicketNo do
   alias Tests.Support.TicketNo
-  alias EdgeDB.Protocol.{Codec, Codecs}
+  alias Gel.Protocol.{Codec, Codecs}
 
   @int64_codec Codecs.Int64.new()
 
@@ -27,7 +27,7 @@ defimpl EdgeDB.Protocol.Codec, for: Tests.Support.Codecs.TicketNo do
 
   @impl Codec
   def encode(_codec, value, _codec_storage) do
-    raise EdgeDB.InvalidArgumentError.new(
+    raise Gel.InvalidArgumentError.new(
             "value can not be encoded as v1::TicketNo: #{inspect(value)}"
           )
   end

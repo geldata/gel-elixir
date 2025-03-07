@@ -1,7 +1,7 @@
 defmodule Tests.DocsTest do
-  use Tests.Support.EdgeDBCase
+  use Tests.Support.GelCase
 
-  setup :edgedb_client
+  setup :gel_client
 
   setup %{client: client} do
     client
@@ -12,33 +12,33 @@ defmodule Tests.DocsTest do
     :ok
   end
 
-  doctest EdgeDB
-  doctest EdgeDB.ConfigMemory
-  doctest EdgeDB.NamedTuple
-  doctest EdgeDB.Object
-  doctest EdgeDB.RelativeDuration
-  doctest EdgeDB.Set
+  doctest Gel
+  doctest Gel.ConfigMemory
+  doctest Gel.NamedTuple
+  doctest Gel.Object
+  doctest Gel.RelativeDuration
+  doctest Gel.Set
 
   skip_before(version: 2)
-  doctest EdgeDB.DateDuration
+  doctest Gel.DateDuration
 
   skip_before(version: 2)
-  doctest EdgeDB.Range
+  doctest Gel.Range
 
   defp drop_tickets(client) do
-    EdgeDB.query!(client, "delete v1::Ticket")
+    Gel.query!(client, "delete v1::Ticket")
 
     client
   end
 
   defp drop_persons(client) do
-    EdgeDB.query!(client, "delete v1::Person")
+    Gel.query!(client, "delete v1::Person")
 
     client
   end
 
   defp add_person(client) do
-    EdgeDB.query!(client, """
+    Gel.query!(client, """
     insert v1::Person {
       first_name := 'Daniel',
       middle_name := 'Jacob',

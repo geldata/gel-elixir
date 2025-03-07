@@ -1,5 +1,0 @@
-[edgedb]
-server-version = "6.0"
-
-[project]
-schema-dir = "./test/support/schema"

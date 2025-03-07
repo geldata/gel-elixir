@@ -1,22 +1,22 @@
-# setup edgedb_scram
+# setup gel_scram
 
-create superuser role edgedb_scram {
-    set password := 'edgedb_scram_password'
+create superuser role gel_scram {
+    set password := 'gel_scram_password'
 };
 
 configure instance insert Auth {
-    user := 'edgedb_scram',
+    user := 'gel_scram',
     method := (insert SCRAM),
     priority := 2
 };
 
 
-# setup edgedb_scram
+# setup gel_scram
 
-create superuser role edgedb_trust;
+create superuser role gel_trust;
 
 configure instance insert Auth {
-    user := 'edgedb_trust',
+    user := 'gel_trust',
     method := (insert Trust),
     priority := 3
 };
