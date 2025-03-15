@@ -1,0 +1,4 @@
+assert context.module.query!(context.client, nil) == nil
+
+r = Gel.Range.new(1, 10)
+assert context.module.query!(context.client, r) == r

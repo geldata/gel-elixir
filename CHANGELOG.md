@@ -5,9 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.10.0] - Unreleased
 
 [Compare with 0.9.0](https://github.com/geldata/gel-elixir/compare/v0.9.0...HEAD)
+
+### Added
+
+- generation of Elixir modules from EdgeQL queries via `mix gel.generate` task.
+- abitility to pass atoms as valid arguments for enums.
+
+### Changed
+
+- `Gel.NamedTuple.to_map/2` to include indexes as keys into result map.
+
+### Fixed
+
+- behavior where an empty link returned an empty instance of `t:Gel.Set.t/0` instead of `nil`.
 
 ## [0.9.0] - 2025-03-07
 

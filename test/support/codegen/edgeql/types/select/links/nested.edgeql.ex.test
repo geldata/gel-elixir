@@ -1,0 +1,25 @@
+assert id = Gel.query_required_single!(context.client, context.insert_aggregate_query)
+
+assert inner_id =
+         Gel.query_required_single!(
+           context.client,
+           """
+           select (<v6::codegen::Aggregate><uuid>$0).rl_number.id
+           """,
+           [id]
+         )
+
+assert [
+         %_{
+           rl_number: %_{
+             id: ^inner_id,
+             ml_int32: [],
+             rl_decimal: %_{
+               rp_decimal_type: decimal
+             }
+           }
+         }
+       ] =
+         context.module.query!(context.client)
+
+assert decimal == Decimal.new("16.132")

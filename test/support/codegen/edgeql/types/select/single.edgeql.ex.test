@@ -1,0 +1,4 @@
+assert context.module.query!(context.client) == nil
+
+assert id = Gel.query_required_single!(context.client, context.insert_aggregate_query)
+assert %_{id: ^id} = context.module.query!(context.client)

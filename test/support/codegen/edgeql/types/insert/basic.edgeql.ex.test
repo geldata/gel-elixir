@@ -1,0 +1,16 @@
+assert %_{} = context.module.query!(client, rp_str: "rp_str_new", rp_str_type: "rp_str_type_new")
+assert %_{} = context.module.query!(client, rp_str: "rp_str_new", rp_str_type: "rp_str_type_new")
+
+assert %Gel.Set{} =
+         s =
+         Gel.query!(
+           client,
+           """
+           select v6::codegen::StrPropertiesType
+           filter
+            .rp_str = 'rp_str_new'
+            and .rp_str_type = 'rp_str_type_new'
+           """
+         )
+
+assert Enum.count(s) == 2

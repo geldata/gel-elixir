@@ -1,0 +1,2 @@
+assert context.module.query!(context.client, arg: %Gel.DateDuration{days: 45}) ==
+         %Gel.DateDuration{days: 45}

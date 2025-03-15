@@ -79,6 +79,7 @@ jobs:
           do
               module_version=${module_file%.gel}
               module_version=${module_version#v}
+              module_version=${module_version%_*}
               if test ${GEL_VERSION} -lt ${module_version}
               then
                   module_path="test/support/schema/${module_file}"

@@ -1,0 +1,2 @@
+assert context.module.query!(context.client, nil) == nil
+assert context.module.query!(context.client, Decimal.new(16132)) == Decimal.new(16132)

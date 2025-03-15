@@ -1,0 +1,20 @@
+assert _id = Gel.query_required_single!(context.client, context.insert_aggregate_query)
+
+assert [
+         %_{
+           rl_number: %_{
+             rl_int64: %_{
+               rp_int64: 16132,
+               rp_int64_type: 16132
+             }
+           },
+           rl_tuple: %_{
+             rl_unnamed_tuple: %_{
+               rp_unnamed_tuple: {"hello", true, {"world", false, :B}}
+             },
+             rl_named_tuple: %_{
+               rp_named_tuple: %{a: "hello", b: true, c: %{a: "world", b: false, c: :B}}
+             }
+           }
+         }
+       ] = context.module.query!(context.client)

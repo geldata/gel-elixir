@@ -1,0 +1,2 @@
+mr = Gel.MultiRange.new([Gel.Range.new(1.0, 10.0)])
+assert context.module.query!(context.client, arg: mr) == mr

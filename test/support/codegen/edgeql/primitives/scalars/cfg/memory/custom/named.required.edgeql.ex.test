@@ -1,0 +1,2 @@
+assert context.module.query!(context.client, arg: Gel.ConfigMemory.new(1024)) ==
+         Gel.ConfigMemory.new(1024)

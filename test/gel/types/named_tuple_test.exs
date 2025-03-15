@@ -37,7 +37,9 @@ defmodule Tests.Gel.Types.NamedTupleTest do
   describe "Gel.NamedTuple.to_map/1" do
     test "returns map converted from object", %{client: client} do
       nt = Gel.query_required_single!(client, select_named_tuple_query())
-      expected_map = Enum.into(1..100, %{}, &{"key_#{&1}", &1})
+      expected_keys_map = Enum.into(1..100, %{}, &{"key_#{&1}", &1})
+      expected_index_map = Enum.into(1..100, %{}, &{&1 - 1, &1})
+      expected_map = Map.merge(expected_keys_map, expected_index_map)
 
       assert Gel.NamedTuple.to_map(nt) == expected_map
     end

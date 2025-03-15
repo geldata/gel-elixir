@@ -1,0 +1,5 @@
+assert %Gel.MultiRange{} = mr = context.module.query!(context.client)
+
+assert %Gel.Range{} = r = Enum.at(mr, 0)
+assert r.lower == ~N[2022-07-01 00:00:00]
+assert r.upper == ~N[2022-12-01 00:00:00]

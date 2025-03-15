@@ -1,0 +1,5 @@
+assert context.module.query!(context.client, nil) == nil
+
+assert context.module.query!(context.client, %Gel.DateDuration{days: 45}) == %Gel.DateDuration{
+         days: 45
+       }

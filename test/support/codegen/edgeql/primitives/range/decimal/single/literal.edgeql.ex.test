@@ -1,0 +1,3 @@
+assert %Gel.Range{} = r = context.module.query!(context.client)
+assert r.lower == Decimal.new(1)
+assert r.upper == Decimal.new(10)

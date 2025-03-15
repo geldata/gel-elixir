@@ -1,0 +1,3 @@
+assert context.module.query!(context.client, arg: :A) == :A
+assert context.module.query!(context.client, arg: :B) == :B
+assert context.module.query!(context.client, arg: :C) == :C

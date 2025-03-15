@@ -1,0 +1,10 @@
+assert id1 = Gel.query_required_single!(context.client, context.insert_aggregate_query)
+assert id2 = Gel.query_required_single!(context.client, context.insert_aggregate_query)
+results = context.module.query!(context.client)
+assert Enum.count(results) == 2
+
+assert Enum.all?([id1, id2], fn id ->
+         Enum.any?(results, fn %_{id: compare_id} ->
+           id == compare_id
+         end)
+       end)

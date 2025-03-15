@@ -1,0 +1,2 @@
+assert context.module.query!(context.client, arg: %Gel.RelativeDuration{months: 12}) ==
+         %Gel.RelativeDuration{months: 12}

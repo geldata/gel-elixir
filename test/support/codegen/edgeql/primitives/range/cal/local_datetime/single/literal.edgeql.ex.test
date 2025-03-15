@@ -1,0 +1,3 @@
+assert %Gel.Range{} = r = context.module.query!(context.client)
+assert r.lower == ~N[2022-07-01 00:00:00]
+assert r.upper == ~N[2022-12-01 00:00:00]

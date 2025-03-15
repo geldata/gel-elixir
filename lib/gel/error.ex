@@ -248,7 +248,7 @@ defmodule Gel.Error do
       [:reset, "#{exception.name}: "],
       [:bright, "#{exception.message}", "\n"],
       [:blue, "#{String.pad_leading("", padding)} ┌─ "],
-      [:reset, "query:#{config.line}:#{config.col}", "\n"],
+      [:reset, "#{config.file}:#{config.line}:#{config.col}", "\n"],
       [:blue, "#{String.pad_leading("", padding)} │", "\n"]
       | Enum.reverse(lines)
     ]
@@ -260,7 +260,11 @@ defmodule Gel.Error do
     "#{exception.name}: #{exception.message}"
   end
 
-  defp generate_render_config(%__MODULE__{} = exception, true, color_errors?) do
+  defp generate_render_config(
+         %__MODULE__{query: %Gel.Query{}} = exception,
+         true,
+         color_errors?
+       ) do
     position_start =
       case Integer.parse(exception.attributes[:character_start] || "") do
         {position_start, ""} ->
@@ -285,6 +289,7 @@ defmodule Gel.Error do
       line: exception.attributes[:line_start] || "?",
       col: exception.attributes[:column_start] || "?",
       hint: exception.attributes[:hint] || "error",
+      file: exception.query.__file__ || "query",
       use_color: color_errors?
     }
   end
