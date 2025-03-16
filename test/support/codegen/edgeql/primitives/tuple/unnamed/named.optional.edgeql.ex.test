@@ -1,0 +1,2 @@
+assert context.module.query!(context.client, arg: nil) == nil
+assert {"test", true} = context.module.query!(context.client, arg: {"test", true})

@@ -1,0 +1,6 @@
+<%= if Gel.EdgeQL.Generator.Shape.complex?(@query.shape) do %>
+{:ok, <%= Gel.EdgeQL.Generator.Render.render(@query.shape, :typespec, @opts) %>}
+<% else %>
+:ok
+<% end %>
+| {:error, reason} when reason: any()

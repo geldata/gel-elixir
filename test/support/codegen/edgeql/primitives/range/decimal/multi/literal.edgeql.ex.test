@@ -1,0 +1,5 @@
+assert %Gel.MultiRange{} = mr = context.module.query!(context.client)
+
+assert %Gel.Range{} = r = Enum.at(mr, 0)
+assert r.lower == Decimal.new(1)
+assert r.upper == Decimal.new(10)

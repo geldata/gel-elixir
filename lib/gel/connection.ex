@@ -939,7 +939,13 @@ defmodule Gel.Connection do
       )
 
     with {:ok, state} <- wait_for_server_ready(state) do
-      {:ok, %Gel.Query{query | codec_storage: state.codec_storage}, state}
+      query = %Gel.Query{
+        query
+        | codec_storage: state.codec_storage,
+          result_cardinality: message.result_cardinality
+      }
+
+      {:ok, query, state}
     end
   end
 
@@ -988,13 +994,20 @@ defmodule Gel.Connection do
          %Server.V0.PrepareComplete{
            input_typedesc_id: in_id,
            output_typedesc_id: out_id,
-           headers: %{capabilities: capabilities}
+           headers: %{capabilities: capabilities},
+           cardinality: result_cardinality
          },
          state
        ) do
     with {:ok, state} <- wait_for_server_ready(state) do
+      query = %Gel.Query{
+        query
+        | capabilities: capabilities,
+          result_cardinality: result_cardinality
+      }
+
       maybe_legacy_describe_codecs(
-        %Gel.Query{query | capabilities: capabilities},
+        query,
         in_id,
         out_id,
         state
@@ -1067,7 +1080,13 @@ defmodule Gel.Connection do
       )
 
     with {:ok, state} <- wait_for_server_ready(state) do
-      {:ok, %Gel.Query{query | codec_storage: state.codec_storage}, state}
+      query = %Gel.Query{
+        query
+        | codec_storage: state.codec_storage,
+          result_cardinality: message.result_cardinality
+      }
+
+      {:ok, query, state}
     end
   end
 
@@ -1163,7 +1182,11 @@ defmodule Gel.Connection do
     query =
       save_query_with_codecs_in_cache(
         state.queries_cache,
-        %Gel.Query{query | capabilities: capabilities},
+        %Gel.Query{
+          query
+          | capabilities: capabilities,
+            result_cardinality: message.result_cardinality
+        },
         message.input_typedesc_id,
         message.output_typedesc_id
       )
@@ -1320,7 +1343,11 @@ defmodule Gel.Connection do
     query =
       save_query_with_codecs_in_cache(
         state.queries_cache,
-        query,
+        %Gel.Query{
+          query
+          | capabilities: message.capabilities,
+            result_cardinality: message.result_cardinality
+        },
         message.input_typedesc_id,
         message.output_typedesc_id
       )

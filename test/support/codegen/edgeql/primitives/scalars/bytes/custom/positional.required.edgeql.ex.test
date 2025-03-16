@@ -1,0 +1,1 @@
+assert context.module.query!(context.client, <<"hello world">>) == <<"hello world">>

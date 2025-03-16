@@ -1,0 +1,1 @@
+assert %{a: "test", b: true} = context.module.query!(context.client)

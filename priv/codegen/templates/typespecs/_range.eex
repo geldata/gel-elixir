@@ -1,0 +1,5 @@
+<%= if @range.is_multirange do %>
+Gel.MultiRange.t(<%= Gel.EdgeQL.Generator.Render.render(@range.type, :typespec, @opts) %>)
+<% else %>
+Gel.Range.t(<%= Gel.EdgeQL.Generator.Render.render(@range.type, :typespec, @opts) %>)
+<% end %>

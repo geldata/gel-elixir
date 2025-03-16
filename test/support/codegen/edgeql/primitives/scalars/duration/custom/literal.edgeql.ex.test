@@ -1,0 +1,1 @@
+assert context.module.query!(context.client) == Timex.Duration.from_seconds(45.6)

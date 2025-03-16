@@ -1,0 +1,4 @@
+assert context.module.query!(context.client, arg: nil) == nil
+
+uuid = UUID.uuid4()
+assert context.module.query!(context.client, arg: uuid) == uuid

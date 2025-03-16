@@ -1,0 +1,2 @@
+r = Gel.Range.new(~N[2022-07-01 00:00:00], ~N[2022-12-01 00:00:00])
+assert context.module.query!(context.client, arg: r) == r

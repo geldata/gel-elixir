@@ -1,0 +1,4 @@
+assert id = Gel.query_required_single!(context.client, context.insert_aggregate_query)
+
+assert [%_{id: ^id, computed_rl_number_ml_int16_rp_int16_type: %Gel.Set{}}] =
+         context.module.query!(context.client)

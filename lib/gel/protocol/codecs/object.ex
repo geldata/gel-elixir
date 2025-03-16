@@ -308,12 +308,10 @@ defimpl Gel.Protocol.Codec, for: Gel.Protocol.Codecs.Object do
         element.name
       end
 
-    single_property? =
-      element.cardinality in [:at_most_one, :one] and
-        (link_property?(element) or not link?(element))
+    single? = element.cardinality in [:at_most_one, :one]
 
     value =
-      if single_property? do
+      if single? do
         nil
       else
         @empty_set

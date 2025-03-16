@@ -1,0 +1,4 @@
+assert context.module.query!(context.client, nil) == nil
+
+r = Gel.Range.new(~D[2022-07-01], ~D[2022-12-01])
+assert context.module.query!(context.client, r) == r

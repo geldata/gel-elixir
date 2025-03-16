@@ -1,0 +1,4 @@
+assert context.module.query!(context.client, arg: nil) == nil
+
+assert context.module.query!(context.client, arg: Timex.Duration.from_seconds(45.6)) ==
+         Timex.Duration.from_seconds(45.6)

@@ -1,0 +1,2 @@
+assert _id = Gel.query_required_single!(context.client, context.insert_aggregate_query)
+assert [%_{ol_number: nil}] = context.module.query!(context.client)

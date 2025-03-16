@@ -1,0 +1,9 @@
+<%= if @property.is_multi do %>
+<%= Gel.EdgeQL.Generator.Render.render(@property.type, :typespec, @opts) %>
+<% else %>
+<%= Gel.EdgeQL.Generator.Render.render(@property.type, :typespec, @opts) %>
+<% end %>
+
+<%= if @property.is_optional do %>
+| nil
+<% end %>

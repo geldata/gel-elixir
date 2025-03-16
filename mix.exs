@@ -2,7 +2,7 @@ defmodule Gel.MixProject do
   use Mix.Project
 
   @app :gel
-  @version "0.9.0"
+  @version "0.10.0"
   @source_url "https://github.com/geldata/gel-elixir"
   @description "Gel client for Elixir"
 
@@ -33,7 +33,8 @@ defmodule Gel.MixProject do
       extra_applications: [
         :crypto,
         :logger,
-        :ssl
+        :ssl,
+        :eex
       ]
     ]
   end
@@ -48,6 +49,7 @@ defmodule Gel.MixProject do
       {:crc, "~> 0.10.4"},
       {:castore, "~> 0.1.0 or ~> 1.0"},
       {:ucwidth, "~> 0.2.0"},
+      {:nimble_options, "~> 1.0"},
       {:jason, "~> 1.2", optional: true},
       {:timex, "~> 3.7", optional: true},
       # test
@@ -62,7 +64,7 @@ defmodule Gel.MixProject do
   end
 
   defp elixirc_paths(:test) do
-    ["lib", "test/support"]
+    ["lib", "test/support", "test/codegen"]
   end
 
   defp elixirc_paths(_env) do
@@ -91,12 +93,14 @@ defmodule Gel.MixProject do
 
   defp preferred_cli_env do
     [
+      format: :test,
       dialyzer: :ci,
       credo: :ci,
       docs: :ci,
       coveralls: :test,
       "coveralls.detail": :test,
-      "coveralls.html": :test
+      "coveralls.html": :test,
+      "gel.generate": :dev
     ]
   end
 
@@ -105,7 +109,8 @@ defmodule Gel.MixProject do
       plt_add_apps: [
         :ex_unit,
         :jason,
-        :timex
+        :timex,
+        :mix
       ],
       plt_file: {:no_warn, "priv/plts/dialyzer.plt"}
     ]
@@ -131,6 +136,7 @@ defmodule Gel.MixProject do
       extras: [
         "pages/md/main.md",
         "pages/md/usage.md",
+        "pages/md/codegen.md",
         "pages/md/datatypes.md",
         "pages/md/custom-codecs.md",
         "CHANGELOG.md"

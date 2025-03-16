@@ -1,0 +1,1 @@
+[<%= Gel.EdgeQL.Generator.Render.render(@set.type, :typespec, @opts) %>]

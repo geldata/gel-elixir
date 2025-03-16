@@ -1,0 +1,3 @@
+assert %Gel.Range{} = r = context.module.query!(context.client)
+assert r.lower == 1.0
+assert r.upper == 10.0

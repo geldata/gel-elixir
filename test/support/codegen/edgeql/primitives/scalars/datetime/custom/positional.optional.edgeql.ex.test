@@ -1,0 +1,4 @@
+assert context.module.query!(context.client, nil) == nil
+
+assert context.module.query!(context.client, ~U[2000-02-16T16:13:02+00]) ==
+         ~U[2000-02-16T16:13:02+00]

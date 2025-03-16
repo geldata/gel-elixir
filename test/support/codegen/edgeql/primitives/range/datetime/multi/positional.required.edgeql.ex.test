@@ -1,0 +1,2 @@
+mr = Gel.MultiRange.new([Gel.Range.new(~U[2022-07-01 00:00:00Z], ~U[2022-12-01 00:00:00Z])])
+assert context.module.query!(context.client, mr) == mr
