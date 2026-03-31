@@ -18,13 +18,56 @@ defmodule Tests.Gel.Pool.GelPoolTest do
       %{client: client}
     end
 
-    test "doesn't open any connections after start", %{client: client} do
-      assert Gel.Pool.concurrency(client) == 0
+    test "eagerly opens min_pool_size connections after start", %{client: client} do
+      Process.sleep(50)
+      assert Gel.Pool.concurrency(client) == 1
     end
 
     test "opens new connection after first request", %{client: client} do
       :executed = Gel.query_required_single!(client, "select 1")
       assert Gel.Pool.concurrency(client) == 1
+    end
+  end
+
+  describe "Gel.Pool with :min_pool_size option" do
+    setup do
+      {:ok, client} =
+        start_supervised(
+          {Gel,
+           connection: PoolConnection,
+           min_pool_size: 3,
+           max_concurrency: 5,
+           idle_interval: 50,
+           show_sensitive_data_on_connection_error: true}
+        )
+
+      %{client: client}
+    end
+
+    test "eagerly opens min_pool_size connections after start", %{client: client} do
+      Process.sleep(50)
+      assert Gel.Pool.concurrency(client) == 3
+    end
+  end
+
+  describe "Gel.Pool with :min_pool_size exceeding :max_concurrency" do
+    setup do
+      {:ok, client} =
+        start_supervised(
+          {Gel,
+           connection: PoolConnection,
+           min_pool_size: 10,
+           max_concurrency: 2,
+           idle_interval: 50,
+           show_sensitive_data_on_connection_error: true}
+        )
+
+      %{client: client}
+    end
+
+    test "clamps min_pool_size to max_concurrency", %{client: client} do
+      Process.sleep(50)
+      assert Gel.Pool.concurrency(client) == 2
     end
   end
 

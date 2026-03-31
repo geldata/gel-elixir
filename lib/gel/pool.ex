@@ -71,6 +71,11 @@ defmodule Gel.Pool do
         opts[:max_concurrency]
       end
 
+    min_pool_size = max(opts[:min_pool_size] || 1, 1)
+
+    min_pool_size =
+      if max_concurrency, do: min(min_pool_size, max_concurrency), else: min_pool_size
+
     idle_limit = opts[:idle_limit]
 
     codel = %Codel{
@@ -96,8 +101,11 @@ defmodule Gel.Pool do
       max_concurrency: max_concurrency,
       conn_mod: conn_mod,
       conn_opts: conn_opts,
-      pool_idle_limit: idle_limit
+      pool_idle_limit: idle_limit,
+      min_pool_size: min_pool_size
     }
+
+    send(self(), :warmup_connections)
 
     {:ok, state}
   end
@@ -125,6 +133,21 @@ defmodule Gel.Pool do
   @impl GenServer
   def handle_info({:set_connections_supervisor, sup_pid}, state) do
     {:noreply, %State{state | conn_sup: sup_pid}}
+  end
+
+  @impl GenServer
+  def handle_info(:warmup_connections, %State{} = state) do
+    state =
+      if state.conn_sup do
+        Enum.reduce(1..state.min_pool_size, state, fn _i, acc ->
+          maybe_create_new_connection(acc)
+        end)
+      else
+        Process.send_after(self(), :warmup_connections, 10)
+        state
+      end
+
+    {:noreply, state}
   end
 
   @impl GenServer
@@ -212,7 +235,13 @@ defmodule Gel.Pool do
   end
 
   defp maybe_create_new_connection(%State{} = state) do
-    max_allowed_connections = min(state.max_concurrency, state.suggested_concurrency) || 1
+    max_allowed_connections =
+      case {state.max_concurrency, state.suggested_concurrency} do
+        {nil, nil} -> state.min_pool_size
+        {max, nil} -> max
+        {nil, suggested} -> suggested
+        {max, suggested} -> min(max, suggested)
+      end
 
     if (state.type == :busy or :ets.info(state.queue, :size) == 0) and
          state.current_concurrency < max_allowed_connections do

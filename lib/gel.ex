@@ -83,6 +83,7 @@ defmodule Gel do
     * `:connection` - module that implements the `DBConnection` behavior for Gel.
       For tests, it's possible to use `Gel.Sandbox` to support automatic rollback after tests are done.
     * `:max_concurrency` - maximum number of pool connections, despite what Gel recommends.
+    * `:min_pool_size` - minimum number of connections to open eagerly on pool startup. Defaults to `1`.
     * `:client_state` - an `Gel.Client.State` struct that will be used in queries by default.
   """
   @type connect_option() ::
@@ -108,6 +109,7 @@ defmodule Gel do
           | {:codecs, list(module())}
           | {:connection, module()}
           | {:max_concurrency, pos_integer()}
+          | {:min_pool_size, pos_integer()}
           | {:client_state, Gel.Client.State.t()}
 
   @typedoc """

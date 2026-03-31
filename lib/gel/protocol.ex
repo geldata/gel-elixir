@@ -883,7 +883,10 @@ defmodule Gel.Protocol do
   end
 
   defp decode_annotation_list(<<data::binary>>, count, acc) do
-    <<name::uint16(), value_size::uint32(), value::binary(value_size), rest::binary>> = data
+    # Gel 6.10 protocol 2.0 sends annotations with string names:
+    #   name_length::uint32(), name::binary(name_length), value_size::uint32(), value::binary(value_size)
+    <<name_len::uint32(), name::binary(name_len), value_size::uint32(), value::binary(value_size),
+      rest::binary>> = data
 
     decode_annotation_list(rest, count - 1, [
       %Types.Annotation{name: name, value: @json_library.decode!(value)} | acc

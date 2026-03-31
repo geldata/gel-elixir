@@ -14,7 +14,8 @@ defmodule Gel.Pool.State do
     :conn_sup,
     :conn_mod,
     :conn_opts,
-    :pool_idle_limit
+    :pool_idle_limit,
+    :min_pool_size
   ]
 
   @type dbconnection_pool_type() :: :busy | :ready
@@ -32,7 +33,8 @@ defmodule Gel.Pool.State do
           conn_sup: Supervisor.supervisor(),
           conn_mod: module(),
           conn_opts: Keyword.t(),
-          pool_idle_limit: integer() | nil
+          pool_idle_limit: integer() | nil,
+          min_pool_size: pos_integer()
         }
 
   @spec to_connection_pool_format(t()) :: dbconnection_pool_state()
